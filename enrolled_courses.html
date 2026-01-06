@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enrolled Courses - LearnAI</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <i class="fas fa-graduation-cap"></i>
+                <a href="index.html" style="color: inherit; text-decoration: none;"><span>LearnAI</span></a>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+                <li><a href="roles.html" class="nav-link">Roles</a></li>
+            </ul>
+            <div class="nav-actions">
+                <div class="nav-user">
+                    <button class="btn btn-primary btn-sm"
+                        onclick="window.location.href='index.html#profile'">Profile</button>
+                    <button class="btn btn-outline btn-sm" id="logout-btn" style="margin-left: 0.5rem;">Logout</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <section class="content-section active">
+            <div class="section-header">
+                <h1>My Enrolled Courses</h1>
+                <p class="subtitle">Track your progress and take quizzes</p>
+            </div>
+
+            <div id="enrolled-courses-list" class="course-list">
+                <!-- Dynamically populated -->
+                <div id="loading-message">Loading courses...</div>
+            </div>
+
+            <div id="no-courses-message" style="display: none; text-align: center; padding: 2rem;">
+                <i class="fas fa-book-open" style="font-size: 3rem; color: #ccc; margin-bottom: 1rem;"></i>
+                <p>You haven't enrolled in any courses yet.</p>
+                <button class="btn btn-primary" onclick="window.location.href='roles.html'"
+                    style="margin-top: 1rem;">Explore Roles</button>
+            </div>
+        </section>
+    </main>
+
+    <script src="js/auth.js"></script>
+    <script src="js/enrolled_courses.js"></script>
+</body>
+
+</html>

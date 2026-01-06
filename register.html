@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - LearnAI</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <i class="fas fa-graduation-cap"></i>
+                <a href="index.html" style="text-decoration: none; color: inherit;"><span>LearnAI</span></a>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="login.html" class="nav-link">Login</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <section class="auth-section">
+            <div class="auth-container">
+                <div class="auth-card">
+                    <div class="auth-header">
+                        <h1>Create Account</h1>
+                        <p>Start your personalized learning journey today</p>
+                    </div>
+                    <form id="register-form" class="auth-form">
+                        <div class="form-group">
+                            <label for="register-name">Full Name</label>
+                            <input type="text" id="register-name" class="form-control"
+                                placeholder="Enter your full name" required>
+                            <span class="error-text" id="name-error"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="register-email">Email</label>
+                            <input type="email" id="register-email" class="form-control" placeholder="Enter your email"
+                                required>
+                            <span class="error-text" id="email-error"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="register-password">Password</label>
+                            <input type="password" id="register-password" class="form-control"
+                                placeholder="Create a password" required minlength="6">
+                            <span class="error-text" id="password-error"></span>
+                            <small class="form-hint">Must be at least 6 characters long</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="register-confirm-password">Confirm Password</label>
+                            <input type="password" id="register-confirm-password" class="form-control"
+                                placeholder="Confirm your password" required>
+                            <span class="error-text" id="confirm-password-error"></span>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-full">Create Account</button>
+                        <div class="auth-footer">
+                            <p>Already have an account? <a href="login.html" class="auth-link">Sign in</a></p>
+                        </div>
+                        <div id="register-error" class="error-message"></div>
+                        <div id="register-success" class="success-message"></div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="js/auth.js"></script>
+    <script src="js/auth-validation.js"></script>
+    <script>
+        // Check if already logged in
+        if (authManager.isLoggedIn()) {
+            window.location.href = 'index.html';
+        }
+
+        const registerForm = document.getElementById('register-form');
+        const passwordInput = document.getElementById('register-password');
+        const confirmPasswordInput = document.getElementById('register-confirm-password');
+
+        // Real-time password match validation
+        confirmPasswordInput.addEventListener('input', function () {
+            validatePasswordMatch();
+        });
+
+        passwordInput.addEventListener('input', function () {
+            validatePasswordMatch();
+            validatePasswordStrength();
+        });
+
+        // Form submission
+        registerForm.addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const name = document.getElementById('register-name').value.trim();
+            const email = document.getElementById('register-email').value.trim();
+            const password = passwordInput.value;
+            const confirmPassword = confirmPasswordInput.value;
+            const errorDiv = document.getElementById('register-error');
+            const successDiv = document.getElementById('register-success');
+
+            // Clear previous errors
+            clearErrors();
+            errorDiv.classList.remove('show');
+            successDiv.classList.remove('show');
+
+            // Validate all fields
+            let isValid = true;
+
+            // Name validation
+            if (!name) {
+                showFieldError('name-error', 'Full name is required');
+                isValid = false;
+            } else if (name.length < 2) {
+                showFieldError('name-error', 'Name must be at least 2 characters');
+                isValid = false;
+            } else if (!/^[a-zA-Z\s]+$/.test(name)) {
+                showFieldError('name-error', 'Name can only contain letters and spaces');
+                isValid = false;
+            }
+
+            // Email validation
+            if (!email) {
+                showFieldError('email-error', 'Email is required');
+                isValid = false;
+            } else if (!validateEmail(email)) {
+                showFieldError('email-error', 'Please enter a valid email address');
+                isValid = false;
+            }
+
+            // Password validation
+            if (!password) {
+                showFieldError('password-error', 'Password is required');
+                isValid = false;
+            } else if (password.length < 6) {
+                showFieldError('password-error', 'Password must be at least 6 characters long');
+                isValid = false;
+            } else if (!validatePasswordStrength(password)) {
+                showFieldError('password-error', 'Password should contain at least one letter and one number');
+                isValid = false;
+            }
+
+            // Confirm password validation
+            if (!confirmPassword) {
+                showFieldError('confirm-password-error', 'Please confirm your password');
+                isValid = false;
+            } else if (password !== confirmPassword) {
+                showFieldError('confirm-password-error', 'Passwords do not match');
+                isValid = false;
+            }
+
+            if (!isValid) {
+                return;
+            }
+
+            // Attempt registration
+            try {
+                const result = await authManager.register(name, email, password);
+
+                if (result.success) {
+                    successDiv.textContent = 'Account created successfully! Redirecting...';
+                    successDiv.classList.add('show');
+
+                    // Redirect after short delay
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 1500);
+                } else {
+                    errorDiv.textContent = result.message;
+                    errorDiv.classList.add('show');
+                }
+            } catch (error) {
+                errorDiv.textContent = 'An error occurred. Please try again.';
+                errorDiv.classList.add('show');
+            }
+        });
+
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+
+        function validatePasswordStrength(password) {
+            // At least one letter and one number
+            const hasLetter = /[a-zA-Z]/.test(password);
+            const hasNumber = /[0-9]/.test(password);
+            return hasLetter && hasNumber;
+        }
+
+        function validatePasswordMatch() {
+            const password = passwordInput.value;
+            const confirmPassword = confirmPasswordInput.value;
+            const errorElement = document.getElementById('confirm-password-error');
+
+            if (confirmPassword && password !== confirmPassword) {
+                showFieldError('confirm-password-error', 'Passwords do not match');
+            } else if (confirmPassword && password === confirmPassword) {
+                clearFieldError('confirm-password-error');
+            }
+        }
+
+        function showFieldError(fieldId, message) {
+            const errorElement = document.getElementById(fieldId);
+            if (errorElement) {
+                errorElement.textContent = message;
+                errorElement.style.display = 'block';
+                // Add error class to input
+                const inputId = fieldId.replace('-error', '');
+                const input = document.getElementById(inputId);
+                if (input) {
+                    input.classList.add('error');
+                }
+            }
+        }
+
+        function clearFieldError(fieldId) {
+            const errorElement = document.getElementById(fieldId);
+            if (errorElement) {
+                errorElement.textContent = '';
+                errorElement.style.display = 'none';
+                // Remove error class from input
+                const inputId = fieldId.replace('-error', '');
+                const input = document.getElementById(inputId);
+                if (input) {
+                    input.classList.remove('error');
+                }
+            }
+        }
+
+        function clearErrors() {
+            document.querySelectorAll('.error-text').forEach(el => {
+                el.textContent = '';
+                el.style.display = 'none';
+            });
+            document.querySelectorAll('.form-control').forEach(el => {
+                el.classList.remove('error');
+            });
+        }
+    </script>
+</body>
+
+</html>

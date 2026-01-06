@@ -1,0 +1,41 @@
+/* Suggestions Dropdown */
+.suggestions-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #ffffff;
+    border: 1px solid rgba(106, 90, 205, 0.2);
+    border-radius: 0 0 0.75rem 0.75rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+    max-height: 200px;
+    overflow-y: auto;
+    display: none;
+    margin-top: 4px;
+}
+
+.suggestion-item {
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    color: #6A5ACD;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.suggestion-item:hover {
+    background-color: #f0f0ed;
+    color: var(--primary-color);
+}
+
+.suggestion-item i {
+    font-size: 0.8rem;
+    opacity: 0.7;
+}
+
+/* Ensure container has relative positioning */
+.search-box {
+    position: relative;
+}

@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LearnAI - Personalized Learning Platform</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <i class="fas fa-graduation-cap"></i>
+                <span>LearnAI</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-link active" data-section="home">Home</a></li>
+                <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+                <li><a href="roles.html" class="nav-link">Roles</a></li>
+                <li><a href="#recommendations" class="nav-link" data-section="recommendations">Recommendations</a></li>
+                <li><button class="btn btn-primary btn-sm nav-signin-btn" id="nav-signin-btn"
+                        onclick="openModal('login-modal')">Sign In</button></li>
+            </ul>
+            <div class="nav-actions">
+                <div class="nav-user" style="display: none;">
+                    <button class="btn btn-primary btn-sm" id="profile-btn"
+                        onclick="switchSection('profile')">Profile</button>
+                    <button class="btn btn-outline btn-sm" id="logout-btn" style="margin-left: 0.5rem;">Logout</button>
+                </div>
+            </div>
+            <div class="nav-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Home Section -->
+        <section id="home" class="content-section active">
+            <div class="home-hero">
+                <div class="hero-content">
+                    <h1 class="hero-title">Unlock Your Potential with LearnAI</h1>
+                    <p class="hero-subtitle">Discover new skills, advance your career, and transform your future through
+                        personalized learning experiences powered by AI.</p>
+                    <div class="hero-buttons">
+                        <button class="btn btn-primary btn-lg" onclick="window.location.href='roles.html'">Explore
+                            Roles</button>
+                        <button class="btn btn-outline btn-lg" onclick="openModal('register-modal')">Get
+                            Started</button>
+                    </div>
+                </div>
+                <div class="slideshow-container">
+                    <div class="slideshow">
+                        <div class="slide active"
+                            style="background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80');">
+                            <div class="slide-content">
+                                <div class="slide-icon"></div>
+                                <h3>Accelerate Your Career Growth</h3>
+                                <p>Master in-demand skills and stay ahead in today's competitive job market</p>
+                            </div>
+                        </div>
+                        <div class="slide"
+                            style="background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80');">
+                            <div class="slide-content">
+                                <div class="slide-icon"></div>
+                                <h3>Personalized Learning Paths</h3>
+                                <p>AI-powered recommendations tailored to your goals and learning style</p>
+                            </div>
+                        </div>
+                        <div class="slide"
+                            style="background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80');">
+                            <div class="slide-content">
+                                <div class="slide-icon"></div>
+                                <h3>Achieve Excellence</h3>
+                                <p>Learn from industry experts and earn recognized certifications</p>
+                            </div>
+                        </div>
+                        <div class="slide"
+                            style="background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1556761175-5973dc0f32e7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80');">
+                            <div class="slide-content">
+                                <div class="slide-icon"></div>
+                                <h3>Join a Global Community</h3>
+                                <p>Connect with learners worldwide and share your success stories</p>
+                            </div>
+                        </div>
+                        <div class="slide"
+                            style="background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80');">
+                            <div class="slide-content">
+                                <div class="slide-icon"></div>
+                                <h3>Continuous Innovation</h3>
+                                <p>Access cutting-edge content and stay updated with emerging technologies</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slideshow-dots">
+                        <span class="dot active" data-slide="0"></span>
+                        <span class="dot" data-slide="1"></span>
+                        <span class="dot" data-slide="2"></span>
+                        <span class="dot" data-slide="3"></span>
+                        <span class="dot" data-slide="4"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="home-features">
+                <h2>Why Choose LearnAI?</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <h3>AI-Powered Learning</h3>
+                        <p>Intelligent recommendations that adapt to your learning pace and preferences</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-certificate"></i>
+                        </div>
+                        <h3>Industry Certifications</h3>
+                        <p>Earn recognized certificates that boost your professional credibility</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3>Expert Instructors</h3>
+                        <p>Learn from industry leaders and experienced professionals</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <h3>Learn Anywhere</h3>
+                        <p>Access roles on any device, anytime, anywhere</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3>Track Progress</h3>
+                        <p>Monitor your learning journey with detailed analytics and insights</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-infinity"></i>
+                        </div>
+                        <h3>Lifetime Access</h3>
+                        <p>Keep learning with unlimited access to course materials</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="home-cta">
+                <div class="cta-content">
+                    <h2>Ready to Start Your Learning Journey?</h2>
+                    <p>Join thousands of learners who are transforming their careers with LearnAI</p>
+                    <button class="btn btn-primary btn-lg" onclick="openModal('register-modal')">Start Learning
+                        Today</button>
+                </div>
+            </div>
+        </section>
+
+
+
+
+
+        <!-- Recommendations Section -->
+        <section id="recommendations" class="content-section">
+            <div class="section-header">
+                <h1>AI-Powered Recommendations</h1>
+                <p class="subtitle">Personalized roles based on your learning style and interests</p>
+            </div>
+            <div id="recommendations-container" class="recommendations-container">
+                <div class="loading-spinner">
+                    <div class="spinner"></div>
+                    <p>Analyzing your preferences...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Profile Section -->
+        <section id="profile" class="content-section">
+            <div class="profile-container">
+                <div class="profile-card">
+                    <div class="profile-header">
+                        <div class="profile-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <h2 id="profile-name">Alex Johnson</h2>
+                        <p class="profile-email" id="profile-email">alex@example.com</p>
+                    </div>
+                    <div class="profile-stats">
+                        <div class="profile-stat">
+                            <span class="stat-label">Learning Level</span>
+                            <span class="stat-value" id="learning-level">Intermediate</span>
+                        </div>
+                        <div class="profile-stat">
+                            <span class="stat-label">Preferred Topics</span>
+                            <span class="stat-value" id="preferred-topics">Programming, Design</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="profile-card">
+                    <h3>Learning Preferences</h3>
+                    <div class="preferences-form">
+                        <div class="form-group">
+                            <label>Learning Style</label>
+                            <select id="learning-style" class="form-control">
+                                <option value="visual">Visual Learner</option>
+                                <option value="auditory">Auditory Learner</option>
+                                <option value="kinesthetic">Kinesthetic Learner</option>
+                                <option value="reading">Reading/Writing</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Preferred Duration</label>
+                            <select id="preferred-duration" class="form-control">
+                                <option value="short">Short (1-3 hours)</option>
+                                <option value="medium">Medium (3-10 hours)</option>
+                                <option value="long">Long (10+ hours)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Interested Categories</label>
+                            <div class="checkbox-group">
+                                <label><input type="checkbox" value="programming" checked> Programming</label>
+                                <label><input type="checkbox" value="design" checked> Design</label>
+                                <label><input type="checkbox" value="business"> Business</label>
+                                <label><input type="checkbox" value="data-science"> Data Science</label>
+                                <label><input type="checkbox" value="marketing"> Marketing</label>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" id="save-preferences">Save Preferences</button>
+                    </div>
+                </div>
+
+                <div class="profile-card">
+                    <h3>Achievements</h3>
+                    <div id="achievements-list" class="achievements-grid">
+                        <!-- Dynamically populated -->
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Course Modal -->
+    <div id="course-modal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <div id="modal-body">
+                <!-- Dynamically populated -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="login-modal" class="modal">
+        <div class="modal-content auth-modal-content">
+            <span class="modal-close" data-modal="login-modal">&times;</span>
+            <div class="auth-card" style="box-shadow: none; border: none; padding: 0;">
+                <div class="auth-header">
+                    <h1>Welcome Back</h1>
+                    <p>Sign in to continue your learning journey</p>
+                </div>
+                <form id="login-form" class="auth-form">
+                    <div class="form-group">
+                        <label for="modal-login-email">Email</label>
+                        <input type="email" id="modal-login-email" class="form-control" placeholder="Enter your email"
+                            required>
+                        <span class="error-text" id="modal-login-email-error"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="modal-login-password">Password</label>
+                        <input type="password" id="modal-login-password" class="form-control"
+                            placeholder="Enter your password" required>
+                        <span class="error-text" id="modal-login-password-error"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="modal-remember-me">
+                            <span>Remember me</span>
+                        </label>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">Sign In</button>
+                    <div class="auth-footer">
+                        <p>Don't have an account? <a href="#" class="auth-link" id="switch-to-register">Create
+                                Account</a></p>
+                    </div>
+                    <div id="modal-login-error" class="error-message"></div>
+                    <div id="modal-login-success" class="success-message"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div id="register-modal" class="modal">
+        <div class="modal-content auth-modal-content">
+            <span class="modal-close" data-modal="register-modal">&times;</span>
+            <div class="auth-card" style="box-shadow: none; border: none; padding: 0;">
+                <div class="auth-header">
+                    <h1>Create Account</h1>
+
+                </div>
+                <form id="register-form" class="auth-form">
+                    <div class="form-group">
+                        <label for="modal-register-name">Full Name</label>
+                        <input type="text" id="modal-register-name" class="form-control"
+                            placeholder="Enter your full name" required>
+                        <span class="error-text" id="modal-register-name-error"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="modal-register-email">Email</label>
+                        <input type="email" id="modal-register-email" class="form-control"
+                            placeholder="Enter your email" required>
+                        <span class="error-text" id="modal-register-email-error"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="modal-register-password">Password</label>
+                        <input type="password" id="modal-register-password" class="form-control"
+                            placeholder="Create a password" required minlength="6">
+                        <span class="error-text" id="modal-register-password-error"></span>
+                        <small class="form-hint">Must be at least 6 characters long</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="modal-register-confirm-password">Confirm Password</label>
+                        <input type="password" id="modal-register-confirm-password" class="form-control"
+                            placeholder="Confirm your password" required>
+                        <span class="error-text" id="modal-register-confirm-password-error"></span>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">Create Account</button>
+                    <div class="auth-footer">
+                        <p>Already have an account? <a href="#" class="auth-link" id="switch-to-login">Sign in</a></p>
+                    </div>
+                    <div id="modal-register-error" class="error-message"></div>
+                    <div id="modal-register-success" class="success-message"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/auth-validation.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/recommendations-loader.js"></script>
+    <script type="module" src="js/main.js"></script>
+
+</body>
+
+</html>

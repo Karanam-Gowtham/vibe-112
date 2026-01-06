@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - LearnAI</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <i class="fas fa-graduation-cap"></i>
+                <a href="index.html" style="color: inherit; text-decoration: none;"><span>LearnAI</span></a>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="dashboard.html" class="nav-link active">Dashboard</a></li>
+                <li><a href="roles.html" class="nav-link">Roles</a></li>
+                <li><a href="index.html#recommendations" class="nav-link">Recommendations</a></li>
+                <li><button class="btn btn-primary btn-sm nav-signin-btn" id="nav-signin-btn"
+                        onclick="openModal('login-modal')">Sign In</button></li>
+            </ul>
+            <div class="nav-actions">
+                <div class="nav-user" style="display: none;">
+                    <button class="btn btn-primary btn-sm" id="profile-btn"
+                        onclick="window.location.href='index.html#profile'">Profile</button>
+                    <button class="btn btn-outline btn-sm" id="logout-btn" style="margin-left: 0.5rem;">Logout</button>
+                </div>
+            </div>
+            <div class="nav-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="content-section active">
+            <div class="dashboard-header">
+                <h1>Welcome back, <span id="user-name">Alex</span>!</h1>
+                <p class="subtitle">Continue your learning journey</p>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card" onclick="window.location.href='enrolled_courses.html'" style="cursor: pointer;">
+                    <div class="stat-icon blue">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="enrolled-count">0</h3>
+                        <p>Enrolled Courses</p>
+                    </div>
+                </div>
+                <div class="stat-card" onclick="window.location.href='completed_courses.html'" style="cursor: pointer;">
+                    <div class="stat-icon green">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="completed-count">0</h3>
+                        <p>Completed Courses</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon orange">
+                        <i class="fas fa-question-circle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="quizzes-attempted">0</h3>
+                        <p>Quizzes Attempted</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon purple">
+                        <i class="fas fa-fire"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="learning-streak">0</h3>
+                        <p>Streak</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-grid">
+                <div class="dashboard-card">
+                    <h2>Your Progress</h2>
+                    <div id="progress-chart" class="progress-container"
+                        style="position: relative; height: 350px; width: 100%; min-height: 350px; display: block !important;">
+                        <canvas id="activityChart" style="display: block; width: 100%; height: 100%;"></canvas>
+                        <div id="no-progress-data"
+                            style="display: none; text-align: center; padding: 2rem; color: #666;">
+                            <i class="fas fa-chart-line" style="font-size: 2rem; margin-bottom: 0.5rem;"></i>
+                            <p>No quiz data yet. Take your first quiz to see your progress!</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-card">
+                    <h2>Topics to Improve</h2>
+                    <div id="weak-topics-container" class="weak-topics-container">
+                        <div class="loading-spinner" style="text-align: center; padding: 2rem;">
+                            <div class="spinner"></div>
+                            <p>Loading your topics to improve...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Login Modal -->
+    <div id="login-modal" class="modal">
+        <div class="modal-content auth-modal-content">
+            <span class="modal-close" data-modal="login-modal">&times;</span>
+            <div class="auth-card" style="box-shadow: none; border: none; padding: 0;">
+                <div class="auth-header">
+                    <h1>Welcome Back</h1>
+                    <p>Sign in to continue your learning journey</p>
+                </div>
+                <form id="login-form" class="auth-form">
+                    <div class="form-group">
+                        <label for="modal-login-email">Email</label>
+                        <input type="email" id="modal-login-email" class="form-control" placeholder="Enter your email"
+                            required>
+                        <span class="error-text" id="modal-login-email-error"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="modal-login-password">Password</label>
+                        <input type="password" id="modal-login-password" class="form-control"
+                            placeholder="Enter your password" required>
+                        <span class="error-text" id="modal-login-password-error"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="modal-remember-me">
+                            <span>Remember me</span>
+                        </label>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">Sign In</button>
+                    <div class="auth-footer">
+                        <p>Don't have an account? <a href="#" class="auth-link" id="switch-to-register">Create
+                                Account</a></p>
+                    </div>
+                    <div id="modal-login-error" class="error-message"></div>
+                    <div id="modal-login-success" class="success-message"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div id="register-modal" class="modal">
+        <div class="modal-content auth-modal-content">
+            <span class="modal-close" data-modal="register-modal">&times;</span>
+            <div class="auth-card" style="box-shadow: none; border: none; padding: 0;">
+                <div class="auth-header">
+                    <h1>Create Account</h1>
+                    <p>Join LearnAI and start your learning journey</p>
+                </div>
+                <form id="register-form" class="auth-form">
+                    <div class="form-group">
+                        <label for="modal-register-name">Full Name</label>
+                        <input type="text" id="modal-register-name" class="form-control"
+                            placeholder="Enter your full name" required>
+                        <span class="error-text" id="modal-register-name-error"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="modal-register-email">Email</label>
+                        <input type="email" id="modal-register-email" class="form-control"
+                            placeholder="Enter your email" required>
+                        <span class="error-text" id="modal-register-email-error"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="modal-register-password">Password</label>
+                        <input type="password" id="modal-register-password" class="form-control"
+                            placeholder="Create a password" required minlength="6">
+                        <span class="error-text" id="modal-register-password-error"></span>
+                        <small class="form-hint">Must be at least 6 characters long</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="modal-register-confirm-password">Confirm Password</label>
+                        <input type="password" id="modal-register-confirm-password" class="form-control"
+                            placeholder="Confirm your password" required>
+                        <span class="error-text" id="modal-register-confirm-password-error"></span>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">Create Account</button>
+                    <div class="auth-footer">
+                        <p>Already have an account? <a href="#" class="auth-link" id="switch-to-login">Sign in</a></p>
+                    </div>
+                    <div id="modal-register-error" class="error-message"></div>
+                    <div id="modal-register-success" class="success-message"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/auth-validation.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script type="module" src="js/main.js"></script>
+
+</body>
+
+</html>

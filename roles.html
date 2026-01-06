@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roles - LearnAI</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/suggestions.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <i class="fas fa-graduation-cap"></i>
+                <a href="index.html" style="color: inherit; text-decoration: none;"><span>LearnAI</span></a>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+                <li><a href="roles.html" class="nav-link active">Roles</a></li>
+                <li><a href="index.html#recommendations" class="nav-link">Recommendations</a></li>
+                <li><button class="btn btn-primary btn-sm nav-signin-btn" id="nav-signin-btn"
+                        onclick="openModal('login-modal')">Sign In</button></li>
+            </ul>
+            <div class="nav-actions">
+                <div class="nav-user" style="display: none;">
+                    <button class="btn btn-primary btn-sm" id="profile-btn"
+                        onclick="window.location.href='index.html#profile'">Profile</button>
+                    <button class="btn btn-outline btn-sm" id="logout-btn" style="margin-left: 0.5rem;">Logout</button>
+                </div>
+            </div>
+            <div class="nav-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Courses Section -->
+        <section id="roles" class="content-section active">
+            <div class="section-header">
+                <h1>Explore Roles</h1>
+                <div class="search-filter">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="role-input"
+                            placeholder="Describe the role you want to learn (e.g., 'I want to become a web developer')">
+                        <div id="suggestions-list" class="suggestions-dropdown"></div>
+                    </div>
+                    <button class="btn btn-primary" id="generate-roadmap-btn" onclick="generateRoadmap()">
+                        <i class="fas fa-route" style="margin-right: 0.5rem;"></i>Generate Roadmap
+                    </button>
+                </div>
+            </div>
+
+            <!-- Popular Roles Section -->
+            <div class="popular-roles-section">
+                <h2>Popular Roles to Explore</h2>
+                <div class="popular-roles-grid">
+                    <div class="popular-role-card" onclick="selectRole('Frontend Developer')">
+                        <i class="fas fa-code"></i>
+                        <h3>Frontend Developer</h3>
+                        <p>Build beautiful user interfaces</p>
+                    </div>
+                    <div class="popular-role-card" onclick="selectRole('Data Scientist')">
+                        <i class="fas fa-chart-line"></i>
+                        <h3>Data Scientist</h3>
+                        <p>Extract insights from data</p>
+                    </div>
+                    <div class="popular-role-card" onclick="selectRole('UI/UX Designer')">
+                        <i class="fas fa-palette"></i>
+                        <h3>UI/UX Designer</h3>
+                        <p>Create amazing user experiences</p>
+                    </div>
+                    <div class="popular-role-card" onclick="selectRole('Backend Developer')">
+                        <i class="fas fa-server"></i>
+                        <h3>Backend Developer</h3>
+                        <p>Build robust server-side applications</p>
+                    </div>
+                    <div class="popular-role-card" onclick="selectRole('Mobile App Developer')">
+                        <i class="fas fa-mobile-alt"></i>
+                        <h3>Mobile App Developer</h3>
+                        <p>Create apps for iOS and Android</p>
+                    </div>
+                    <div class="popular-role-card" onclick="selectRole('DevOps Engineer')">
+                        <i class="fas fa-cogs"></i>
+                        <h3>DevOps Engineer</h3>
+                        <p>Automate and optimize development</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Roadmap Display Section -->
+            <div id="roadmap-section" class="roadmap-section" style="display: none;">
+                <div class="roadmap-header">
+                    <h2 id="roadmap-title">Your Learning Roadmap</h2>
+                    <button class="btn btn-outline btn-sm" onclick="hideRoadmap()">
+                        <i class="fas fa-times"></i> Close
+                    </button>
+                </div>
+
+                <!-- View Toggle -->
+                <div class="roadmap-view-toggle">
+                    <button class="view-toggle-btn active" onclick="switchRoadmapView('visual')" id="visual-view-btn">
+                        <i class="fas fa-project-diagram"></i> Visual Roadmap
+                    </button>
+                    <button class="view-toggle-btn" onclick="switchRoadmapView('text')" id="text-view-btn">
+                        <i class="fas fa-list"></i> Text Roadmap
+                    </button>
+                </div>
+
+                <!-- Visual Roadmap Container -->
+                <div id="visual-roadmap-container" class="visual-roadmap-container" style="display: block;">
+                    <!-- Visual roadmap will be populated here -->
+                </div>
+
+                <!-- Text Roadmap Content -->
+                <div id="roadmap-content" class="roadmap-content" style="display: none;">
+                    <!-- Text roadmap content will be populated here -->
+                </div>
+            </div>
+
+            <!-- Loading Spinner -->
+            <div id="loading-spinner" class="loading-container" style="display: none;">
+                <div class="spinner"></div>
+                <p>Generating your personalized roadmap...</p>
+            </div>
+
+            <!-- Error Message -->
+            <div id="error-message" class="error-container" style="display: none;">
+                <div class="error-icon">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <h3>Unable to Generate Roadmap</h3>
+                <p id="error-text">Please check your API configuration and try again.</p>
+                <button class="btn btn-primary" onclick="hideError()">Try Again</button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Course Modal -->
+    <div id="course-modal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <div id="modal-body">
+                <!-- Dynamically populated -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Node Details Modal -->
+    <div id="node-details-modal" class="node-details-modal">
+        <div class="node-details-content">
+            <div class="node-details-header">
+                <h3 id="node-details-title">Node Details</h3>
+                <button class="node-details-close" onclick="closeNodeDetails()">&times;</button>
+            </div>
+            <div id="node-details-body">
+                <!-- Node details will be populated here -->
+            </div>
+            <div class="node-progress-toggle">
+                <input type="checkbox" id="node-progress-checkbox">
+                <label for="node-progress-checkbox">Mark as completed</label>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="login-modal" class="modal">
+        <div class="modal-content auth-modal-content">
+            <span class="modal-close" data-modal="login-modal">&times;</span>
+            <div class="auth-card" style="box-shadow: none; border: none; padding: 0;">
+                <div class="auth-header">
+                    <h1>Welcome Back</h1>
+                    <p>Sign in to continue your learning journey</p>
+                </div>
+                <form id="login-form" class="auth-form">
+                    <div class="form-group">
+                        <label for="modal-login-email">Email</label>
+                        <input type="email" id="modal-login-email" class="form-control" placeholder="Enter your email"
+                            required>
+                        <span class="error-text" id="modal-login-email-error"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="modal-login-password">Password</label>
+                        <input type="password" id="modal-login-password" class="form-control"
+                            placeholder="Enter your password" required>
+                        <span class="error-text" id="modal-login-password-error"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="modal-remember-me">
+                            <span>Remember me</span>
+                        </label>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">Sign In</button>
+                    <div class="auth-footer">
+                        <p>Don't have an account? <a href="#" class="auth-link" id="switch-to-register">Create
+                                Account</a></p>
+                    </div>
+                    <div id="modal-login-error" class="error-message"></div>
+                    <div id="modal-login-success" class="success-message"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div id="register-modal" class="modal">
+        <div class="modal-content auth-modal-content">
+            <span class="modal-close" data-modal="register-modal">&times;</span>
+            <div class="auth-card" style="box-shadow: none; border: none; padding: 0;">
+                <div class="auth-header">
+                    <h1>Create Account</h1>
+                    <p>Join LearnAI and start your learning journey</p>
+                </div>
+                <form id="register-form" class="auth-form">
+                    <div class="form-group">
+                        <label for="modal-register-name">Full Name</label>
+                        <input type="text" id="modal-register-name" class="form-control"
+                            placeholder="Enter your full name" required>
+                        <span class="error-text" id="modal-register-name-error"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="modal-register-email">Email</label>
+                        <input type="email" id="modal-register-email" class="form-control"
+                            placeholder="Enter your email" required>
+                        <span class="error-text" id="modal-register-email-error"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="modal-register-password">Password</label>
+                        <input type="password" id="modal-register-password" class="form-control"
+                            placeholder="Create a password" required minlength="6">
+                        <span class="error-text" id="modal-register-password-error"></span>
+                        <small class="form-hint">Must be at least 6 characters long</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="modal-register-confirm-password">Confirm Password</label>
+                        <input type="password" id="modal-register-confirm-password" class="form-control"
+                            placeholder="Confirm your password" required>
+                        <span class="error-text" id="modal-register-confirm-password-error"></span>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">Create Account</button>
+                    <div class="auth-footer">
+                        <p>Already have an account? <a href="#" class="auth-link" id="switch-to-login">Sign in</a></p>
+                    </div>
+                    <div id="modal-register-error" class="error-message"></div>
+                    <div id="modal-register-success" class="success-message"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/auth-validation.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/roles.js"></script>
+    <script type="module" src="js/main.js"></script>
+
+</body>
+
+</html>
